@@ -30,7 +30,6 @@
 .trash {
     cursor: pointer;
     color: #EA2027 !important;
-    padding-top: 5%;
 }
 
 #display-todo .list-group-item {
@@ -110,6 +109,97 @@
     border-left: 4px solid #0984e3 !important;
 }
 
+
+/***LOADER*********/
+
+#loader {
+    background: url("http://www.aveva.com/Images/ajax-loader.gif") no-repeat scroll center center #FFF;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
 .hide {
     display: none;
+}
+
+#search {
+    color: white;
+    margin-top: 4%;
+}
+
+
+/****************CHECKBOX*****/
+
+.main {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    padding-top: 5px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.main input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border: 2px solid #6c5ce7;
+    border-radius: 12px;
+    background-color: white;
+}
+
+.main:hover input~.checkmark {
+    background-color: #6c5ce7;
+}
+
+.main input:checked~.checkmark {
+    background-color: #6c5ce7;
+}
+
+#md-todoList .list-group-item {
+    padding: 1% !important;
+    width: 150% !important;
+    height: 65px !important;
+}
+
+#md-todoList .trash {
+    position: absolute !important;
+    right: 2% !important;
+    top: 26% !important;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.main input:checked~.checkmark:after {
+    display: block;
+}
+
+.main .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
