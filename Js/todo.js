@@ -559,11 +559,11 @@ $(document).ready(function() {
                 completed = "completed-item";
                 checked = "checked";
             }
-            if (value.importance.toLowerCase() == VERY_HIGH_IMPORTANCE) {
+            if (value.importance.toLowerCase() == VERY_HIGH_IMPORTANCE.toLowerCase()) {
                 importanceClass = "veryHighList";
-            } else if (value.importance.toLowerCase() == HIGH_IMPORTANCE) {
+            } else if (value.importance.toLowerCase() == HIGH_IMPORTANCE.toLowerCase()) {
                 importanceClass = "highList";
-            } else if (value.importance.toLowerCase() == HIGH_IMPORTANCE) {
+            } else if (value.importance.toLowerCase() == NORMAL_IMPORTANCE.toLowerCase()) {
                 importanceClass = "normalList";
             } else {
                 //no class
