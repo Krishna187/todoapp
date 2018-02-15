@@ -4,7 +4,7 @@
 
 .mainDiv {
     min-height: 800px;
-    padding: 2%;
+    padding: 1% 5%;
 }
 
 .card-text {
@@ -172,7 +172,7 @@
 
 #md-todoList .list-group-item {
     padding: 1% !important;
-    width: 150% !important;
+    width: 111% !important;
     height: 65px !important;
 }
 
