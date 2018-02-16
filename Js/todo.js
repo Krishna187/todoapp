@@ -403,6 +403,7 @@ $(document).ready(function() {
         var name = formData[0].value;
         var importance = formData[1].value;
         addToDoList(name, dueDate, importance, false);
+        $('#todoList').val('');
         reFreshData();
         //show alert
         createAlert("You just created a todo list. Add more...");
