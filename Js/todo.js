@@ -1,8 +1,8 @@
-$(window).load(function() {
+$(window).load(function () {
     $('#loader').fadeOut(3000);
 
 });
-$(document).ready(function() {
+$(document).ready(function () {
     var VERY_HIGH_IMPORTANCE = 'veryHigh',
         HIGH_IMPORTANCE = 'high',
         NORMAL_IMPORTANCE = 'normal';
@@ -40,7 +40,7 @@ $(document).ready(function() {
                 $('#noItem').addClass('hide');
             }
             //populate the recent data
-            $.each(recent, function(index, value) {
+            $.each(recent, function (index, value) {
                 var importanceClass = "";
                 var completed = "";
                 var checked = "";
@@ -67,6 +67,16 @@ $(document).ready(function() {
                 $('#noItem').removeClass('hide');
             }
 
+            //Set the Left navigation bar count to zero
+            $('#totalCount').text(0);
+            $('#veryHighCount').text(0);
+            $('#highCount').text(0);
+            $('#normalCount').text(0);
+            //by dates
+            $('#todayCount').text(0);
+            $('#thisWeekCount').text(0);
+            $('#nextWeekCount').text(0);
+            $('#thisMonthCount').text(0);
         }
 
     }
@@ -96,7 +106,7 @@ $(document).ready(function() {
     }
     //Class declaration ends
     /****************LOCAL STORAGE STUFFS***************/
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
 
     } else {
         alert("Local storage not supported.")
@@ -185,15 +195,19 @@ $(document).ready(function() {
     /***************SEARCH AND FILTER UTILITIES */
     //search for an item by importance
     function searchByImportance(currentData) {
-        var result = { veryHigh: [], high: [], normal: [] };
+        var result = {
+            veryHigh: [],
+            high: [],
+            normal: []
+        };
         if (currentData) {
-            result.veryHigh = currentData.filter(function(element) {
+            result.veryHigh = currentData.filter(function (element) {
                 return element.importance.toLowerCase() == "veryhigh";
             });
-            result.high = currentData.filter(function(element) {
+            result.high = currentData.filter(function (element) {
                 return element.importance.toLowerCase() == "high";
             });
-            result.normal = currentData.filter(function(element) {
+            result.normal = currentData.filter(function (element) {
                 return element.importance.toLowerCase() == "normal";
             });
 
@@ -202,14 +216,17 @@ $(document).ready(function() {
     }
     //search by completion status
     function searchByCompletion(currentData) {
-        var result = { completed: [], notCompleted: [] };
+        var result = {
+            completed: [],
+            notCompleted: []
+        };
         if (currentData) {
 
-            result.completed = currentData.filter(function(element) {
+            result.completed = currentData.filter(function (element) {
 
                 return element.isCompleted == true;
             });
-            result.notCompleted = currentData.filter(function(element) {
+            result.notCompleted = currentData.filter(function (element) {
 
                 return element.isCompleted == false;
             });
@@ -238,21 +255,21 @@ $(document).ready(function() {
 
         };
         if (currentData) {
-            result.today = currentData.filter(function(element, index) {
+            result.today = currentData.filter(function (element, index) {
                 return toMMDDYYYY(new Date(element.dueDate)).getTime() == toMMDDYYYY(new Date()).getTime();
             });
-            result.thisWeek = currentData.filter(function(element, index) {
+            result.thisWeek = currentData.filter(function (element, index) {
                 var startDate = getStartAndEndDate("thisweek").start;
                 var endDate = getStartAndEndDate("thisweek").end;
                 return toMMDDYYYY(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYY(new Date(element.dueDate)).getTime() <= endDate;
             });
-            result.nextweek = currentData.filter(function(element, index) {
+            result.nextweek = currentData.filter(function (element, index) {
 
                 var startDate = getStartAndEndDate("nextweek").start;
                 var endDate = getStartAndEndDate("nextweek").end;
                 return toMMDDYYYY(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYY(new Date(element.dueDate)).getTime() <= endDate;
             });
-            result.thisMonth = currentData.filter(function(element, index) {
+            result.thisMonth = currentData.filter(function (element, index) {
                 var startDate = getStartAndEndDate("thismonth").start;
                 var endDate = getStartAndEndDate("thismonth").end;
                 return toMMDDYYYY(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYY(new Date(element.dueDate)).getTime() <= endDate;
@@ -347,11 +364,11 @@ $(document).ready(function() {
     function getRecentToDos(currentData) {
         var total = currentData != null ? currentData.length : 0;
         if (total > 5) {
-            var filteredData = currentData.filter(function(element) {
+            var filteredData = currentData.filter(function (element) {
                 return element.id > (total - 5);
             });
 
-            filteredData.sort(function(a, b) {
+            filteredData.sort(function (a, b) {
                 var dateA = new Date(a.dueDate),
                     dateB = new Date(b.dueDate);
                 return dateB - dateA;
@@ -360,7 +377,7 @@ $(document).ready(function() {
 
         } else {
 
-            currentData.sort(function(a, b) {
+            currentData.sort(function (a, b) {
                 var dateA = new Date(a.dueDate),
                     dateB = new Date(b.dueDate);
                 return dateB - dateA;
@@ -388,14 +405,14 @@ $(document).ready(function() {
     function createAlert(message) {
         $("#actionAlert #alertMessage").text(message);
         $("#actionAlert").show();
-        $("#actionAlert").fadeTo(2000, 500).slideUp(500, function() {
+        $("#actionAlert").fadeTo(2000, 500).slideUp(500, function () {
             $("#actionAlert").slideUp(500);
         });
 
     }
 
     //When an item is created
-    $('#createForm').submit(function(event) {
+    $('#createForm').submit(function (event) {
         event.preventDefault();
         //Gather form data
         var dueDate = dateSelected;
@@ -411,7 +428,7 @@ $(document).ready(function() {
 
     //when users click on the checkbox
 
-    $("#recent").on('change', '.changeStatus', function() {
+    $("#recent").on('change', '.changeStatus', function () {
         var currentData = showData();
         var index = parseInt($(this).attr("data-id"));
         var message = "status changed";
@@ -428,7 +445,7 @@ $(document).ready(function() {
         createAlert(message);
     });
     //on delete event
-    $("#recent").on('click', '.trash', function() {
+    $("#recent").on('click', '.trash', function () {
         var index = $(this).attr("data-id");
         if (confirm("Are you sure you would like to delete this item?")) {
             deleteItem(index);
@@ -440,7 +457,7 @@ $(document).ready(function() {
     });
 
     //delte all the storage data
-    $('#deleteAll').on('click', function() {
+    $('#deleteAll').on('click', function () {
         if (confirm("This action will remove all your data. Are you sure?")) {
             if (localStorage["todos"]) {
                 localStorage.clear();
@@ -536,12 +553,12 @@ $(document).ready(function() {
         }
     }
     //When users click on the items on the left panel 
-    $('.category').on('click', '.openModal', function() {
+    $('.category').on('click', '.openModal', function () {
         var category = $(this).attr('data-category');
         var filter = $(this).attr('data-filter');
         DisplayDataInModal(false, category, filter);
     });
-    $('#todoModal').on('hidden.bs.modal', function() {
+    $('#todoModal').on('hidden.bs.modal', function () {
         $('#md-todoList ul.list-group').empty();
     });
     //this will create a modal and bind the incoming data to it
@@ -552,7 +569,7 @@ $(document).ready(function() {
         $('#md-todoList #categoryAndFilter').attr('data-category', category);
         $('#md-todoList #categoryAndFilter').attr('data-filter', filter);
         //populate the recent data
-        $.each(data, function(index, value) {
+        $.each(data, function (index, value) {
             var importanceClass = "";
             var completed = "";
             var checked = "";
@@ -589,14 +606,14 @@ $(document).ready(function() {
         var result = [];
         if (currentData) {
 
-            result = currentData.filter(function(element, index) {
+            result = currentData.filter(function (element, index) {
                 return toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() >= toMMDDYYYYForComparing(fromDate) && toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() <= toMMDDYYYYForComparing(toDate);
             });
         }
         return result;
     }
     //on delete event in the modal
-    $("#md-todoList").on('click', '.trash', function() {
+    $("#md-todoList").on('click', '.trash', function () {
         var index = parseInt($(this).attr("data-id"));
         if (confirm("Are you sure you would like to delete this item?")) {
             deleteItem(index);
@@ -614,7 +631,7 @@ $(document).ready(function() {
 
     });
     //Chaneg status within the modal
-    $("#md-todoList").on('change', '.changeStatus', function() {
+    $("#md-todoList").on('change', '.changeStatus', function () {
         var currentData = showData();
         var index = parseInt($(this).attr("data-id"));
         changeStatusOfAToDo(index);
@@ -638,21 +655,21 @@ $(document).ready(function() {
             thisMonth: []
         };
         if (currentData) {
-            result.today = currentData.filter(function(element, index) {
+            result.today = currentData.filter(function (element, index) {
                 return toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() == toMMDDYYYYForComparing(new Date()).getTime();
             });
-            result.thisWeek = currentData.filter(function(element, index) {
+            result.thisWeek = currentData.filter(function (element, index) {
                 var startDate = getStartAndEndDate("thisweek").start;
                 var endDate = getStartAndEndDate("thisweek").end;
                 return toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() <= endDate;
             });
-            result.nextWeek = currentData.filter(function(element, index) {
+            result.nextWeek = currentData.filter(function (element, index) {
 
                 var startDate = getStartAndEndDate("nextweek").start;
                 var endDate = getStartAndEndDate("nextweek").end;
                 return toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() <= endDate;
             });
-            result.thisMonth = currentData.filter(function(element, index) {
+            result.thisMonth = currentData.filter(function (element, index) {
                 var startDate = getStartAndEndDate("thismonth").start;
                 var endDate = getStartAndEndDate("thismonth").end;
                 return toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() >= startDate && toMMDDYYYYForComparing(new Date(element.dueDate)).getTime() <= endDate;
@@ -663,7 +680,10 @@ $(document).ready(function() {
     }
     //based on the params, it will generate start and end date
     function getStartAndEndDate(range) {
-        let result = { start: new Date(), end: new Date() };
+        let result = {
+            start: new Date(),
+            end: new Date()
+        };
         if (range.toLowerCase() == "today") {
             result.start = toMMDDYYYYForComparing(new Date());
             result.end = toMMDDYYYYForComparing(new Date());
@@ -691,15 +711,19 @@ $(document).ready(function() {
     }
     //search for an item by importance
     function searchByImportance(currentData) {
-        var result = { veryHigh: [], high: [], normal: [] };
+        var result = {
+            veryHigh: [],
+            high: [],
+            normal: []
+        };
         if (currentData) {
-            result.veryHigh = currentData.filter(function(element) {
+            result.veryHigh = currentData.filter(function (element) {
                 return element.importance == VERY_HIGH_IMPORTANCE;
             });
-            result.high = currentData.filter(function(element) {
+            result.high = currentData.filter(function (element) {
                 return element.importance == HIGH_IMPORTANCE;
             });
-            result.normal = currentData.filter(function(element) {
+            result.normal = currentData.filter(function (element) {
                 return element.importance == NORMAL_IMPORTANCE;
             });
 
